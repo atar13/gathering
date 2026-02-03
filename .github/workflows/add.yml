@@ -11,16 +11,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Write to data/comments.yml
-        run: echo '${{ toJson(github.event) }}' >> websites.tmol
+        if: ${{ contains(github.event.issue.labels.*.name, 'join') }}
+        run: echo '${{ github.event.issue.body }}' >> websites.toml
       - name: Push changes
         run: |
           git config --local user.name 'Github Actions: ${{ github.action }} (for @${{ github.event.sender.login }})'
           git config --local user.email '${{ github.event.sender.login }}@users.noreply.github.com'
-          git add websites.tmol
-          git commit -m "Add comment from @${{ github.event.sender.login }}
+          git checkout -b add-${{ github.event.issue.number }}
+          git add websites.toml
+          git commit -m "add @${{ github.event.sender.login }}
 
           Resolves #${{ github.event.issue.number }}"
-          git push
+          git push -u origin add-${{ github.event.issue.number }}
+          gh pr open --title "Add @${{ github.event.sender.login }}" --body "Adds @${{ github.event.sender.login }}
+
+          Resolves #${{ github.event.issue.number }}"
     permissions:
       contents: write
-      issues: write
+      pull-requests: write
