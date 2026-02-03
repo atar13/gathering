@@ -5,13 +5,13 @@ on:
 jobs:
   splegh:
     name: cough
+    if: ${{ contains(github.event.issue.labels.*.name, 'question') }}
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}
     steps:
       - uses: actions/checkout@v4
       - name: Write to data/comments.yml
-        if: ${{ contains(github.event.issue.labels.*.name, 'join') }}
         run: echo '${{ github.event.issue.body }}' >> websites.toml
       - name: Push changes
         run: |

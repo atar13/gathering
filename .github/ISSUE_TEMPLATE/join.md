@@ -1,7 +1,7 @@
 ---
 name: Join the webring
 about: "Fill out the form to be added to the webring"
-labels: join
+labels: question
 ---
 
 [[websites]]
