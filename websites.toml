@@ -48,3 +48,10 @@ atom = "" # optional
 rss = "" # optional
 owner = "AZ"
 
+[[websites]]
+name = "atarbinian"
+slug = "atarbinian"
+about = "personal site and blog"
+url = "https://atarbinian.com"
+rss = "https://atarbinian.com/index.xml"
+owner = "atar13"
